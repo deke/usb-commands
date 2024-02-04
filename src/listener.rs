@@ -31,7 +31,7 @@ impl<T: UsbContext> rusb::Hotplug<T> for config::Config {
 }
 
 fn handle_device_event<T: UsbContext>(device: &Device<T>, device_id: &str, command: &str) {
-    if device.device_string().unwrap() == device_id {
+    if device.device_string().unwrap_or_default() == device_id {
         debug!("device event: {:?}", device);
         command_runner::run_command(command);
     }
@@ -50,7 +50,6 @@ pub fn start_listener(config: config::Config) {
                 Ok(_) => {}
                 Err(e) => {
                     error!("Error handling USB events: {:?}", e);
-                    break;
                 }
             }
         }
