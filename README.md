@@ -9,7 +9,6 @@ After looking at it's issues, I came across a [comment](https://github.com/haimg
 However, they needed to comment out some of code in [display-switch](https://github.com/haimgel/display-switch) to get it to work.  Anyhow, I decided it would be a fun Friday evening activity to create a more simplified program that listens for a USB device to connect or disconnect and then execute an associated command.
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
 ## Configuration
 
 ```ini
@@ -29,9 +28,7 @@ execute_on_disconnect = "/usr/local/bin/m1ddc display <UUID> set input <n>"
 #### Or even simpler
 
 ```ini
-device_id = "<DEVICE_ID>"
-execute_on_connect = "/usr/local/bin/m1ddc set input <n>"
-execute_on_disconnect = "/usr/local/bin/m1ddc set input <n>"
+
 ```
 
 ## Find your USB device_id
@@ -78,38 +75,52 @@ You can find the USB device ID on your Windows machine by using the built-in Dev
 [Install Rust](https://www.rust-lang.org/tools/install)
 
 ---
+
 ### Clone
+
 ```bash
 git clone https://github.com/deke/usb-commands.git
 cd usb-commands
 ```
 
 ---
+
 ### Build
+
 if on M1 Mac
+
 ```bash
 rustup target add aarch64-apple-darwin
 cargo build --target=aarch64-apple-darwin --release
 ```
+
 else
+
 ```bash
 cargo build --release
 ```
 
 ---
+
 ### Auto Start
+
 #### Mac
 
 Write your ini file to `~/Library/Application Support/dev.deke.usb-commands/usb-commands.ini`
 if M1 Mac
+
 ```bash
 cp target/aarch64-apple-darwin/release/usb-commands /usr/local/bin 
 ```
+
 else
+
 ```bash
 cp target/release/usb-commands /usr/local/bin/
 ```
+
 then
+
 ```bash
 cp dev.deke.usb-commands.daemon.plist ~/Library/LaunchAgents/
 launchctl load ~/Library/LaunchAgents/dev.deke.usb-commands.daemon.plist
@@ -122,17 +133,23 @@ Write your ini file to `C:\Users\\dekek\\AppData\\Roaming\\dev.deke.usb-commands
 ```bash
 copy target\release\usb-commands.exe %APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup
 ```
+
 ---
+
 ## Debugging
 
 At present, there is not much in the way of debugging. I recommend running this in the terminal and watching it's output.  Once you have it working, copy the binary to it's proper location.
 
 ### Running for debug purposes
+
 if M1 Mac
+
 ```bash
 cargo run --target=aarch64-apple-darwin 
 ```
+
 else
+
 ```bash
 cargo run
 ```
