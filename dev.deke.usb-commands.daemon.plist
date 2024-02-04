@@ -8,5 +8,10 @@
         <string>/usr/local/bin/usb-commands</string>
         <key>RunAtLoad</key>
         <true/>
+        <key>EnvironmentVariables</key>
+        <dict>
+            <key>RUST_LOG</key>
+            <string>info</string>
+        </dict>
     </dict>
 </plist>
